@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ernesto Lopez-Sanchez — Creative Portfolio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #080808;
+    --surface: #111111;
+    --card: #161616;
+    --border: #2a2a2a;
+    --text: #e8e8e8;
+    --muted: #666;
+    --red: #FF1E1E;
+    --blue: #1E6FFF;
+    --red-dim: rgba(255,30,30,0.08);
+    --blue-dim: rgba(30,111,255,0.08);
+    --accent: var(--red);
+    --accent-dim: var(--red-dim);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(8,8,8,0.88);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px; letter-spacing: 0.15em;
+    text-transform: uppercase; text-decoration: none;
+    background: linear-gradient(90deg, var(--red), var(--blue));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: #fff;
+    background: linear-gradient(90deg, var(--red), var(--blue));
+    border: none; padding: 10px 22px;
+    cursor: pointer; text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.8; }
+
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 48px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero-glow-red {
+    position: absolute;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,30,30,0.1) 0%, transparent 70%);
+    top: 5%; right: -60px; pointer-events: none;
+    animation: pulseGlowR 7s ease-in-out infinite;
+  }
+  .hero-glow-blue {
+    position: absolute;
+    width: 400px; height: 400px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(30,111,255,0.1) 0%, transparent 70%);
+    bottom: 10%; left: -80px; pointer-events: none;
+    animation: pulseGlowB 9s ease-in-out infinite;
+  }
+  @keyframes pulseGlowR {
+    0%,100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.5; }
+  }
+  @keyframes pulseGlowB {
+    0%,100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.15); opacity: 0.4; }
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 24px;
+    opacity: 0; animation: fadeUp 0.8s 0.3s forwards;
+  }
+  .hero-name {
+    font-size: clamp(56px, 10vw, 130px);
+    font-weight: 700; line-height: 0.9;
+    letter-spacing: -0.02em; text-transform: uppercase;
+    margin-bottom: 32px;
+    opacity: 0; animation: fadeUp 0.8s 0.5s forwards;
+  }
+  .hero-name .line-red { color: var(--red); }
+  .hero-name .line-blue { color: var(--blue); }
+  .hero-name .line-split {
+    background: linear-gradient(90deg, var(--red) 40%, var(--blue) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-desc {
+    max-width: 560px; font-size: 18px; line-height: 1.7;
+    color: var(--muted); margin-bottom: 48px;
+    opacity: 0; animation: fadeUp 0.8s 0.7s forwards;
+  }
+  .hero-tags {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.8s 0.9s forwards;
+  }
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    border: 1px solid var(--border);
+    padding: 8px 16px; color: var(--muted);
+  }
+  .tag.red { border-color: var(--red); color: var(--red); }
+  .tag.blue { border-color: var(--blue); color: var(--blue); }
+
+  .hero-scroll {
+    position: absolute; bottom: 40px; right: 48px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    opacity: 0; animation: fadeUp 0.8s 1.2s forwards;
+  }
+  .hero-scroll span {
+    font-family: 'Space Mono', monospace; font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+    writing-mode: vertical-rl;
+  }
+  .scroll-line {
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, var(--red), var(--blue));
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%,100% { opacity: 1; transform: scaleY(1); }
+    50% { opacity: 0.3; transform: scaleY(0.6); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 120px 48px; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .section-label::after {
+    content: ''; flex: 1; max-width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--red), var(--blue));
+  }
+  .section-label.blue-label { color: var(--blue); }
+  .section-title {
+    font-size: clamp(32px, 5vw, 56px); font-weight: 700;
+    letter-spacing: -0.02em; line-height: 1; margin-bottom: 16px;
+  }
+  .section-sub { color: var(--muted); max-width: 480px; margin-bottom: 64px; }
+
+  /* ── ABOUT ── */
+  #about { background: var(--surface); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+  .about-text p { color: var(--muted); line-height: 1.8; margin-bottom: 24px; }
+  .about-text p strong { color: var(--text); }
+  .stat-row {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px; margin-top: 48px;
+    border-top: 1px solid var(--border); padding-top: 48px;
+  }
+  .stat-num {
+    font-size: 40px; font-weight: 700; letter-spacing: -0.03em;
+  }
+  .stat-num.r { color: var(--red); }
+  .stat-num.b { color: var(--blue); }
+  .stat-num.g {
+    background: linear-gradient(90deg, var(--red), var(--blue));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace; font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); margin-top: 4px;
+  }
+  .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .skill-item {
+    border: 1px solid var(--border);
+    padding: 20px 24px; background: var(--card);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .skill-item:hover { background: rgba(255,30,30,0.05); border-color: rgba(255,30,30,0.4); }
+  .skill-item:nth-child(even):hover { background: rgba(30,111,255,0.05); border-color: rgba(30,111,255,0.4); }
+  .skill-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+  .skill-detail {
+    font-family: 'Space Mono', monospace; font-size: 10px;
+    letter-spacing: 0.08em; color: var(--muted);
+  }
+
+  /* ── PORTFOLIO ── */
+  #portfolio { background: var(--black); }
+  .filter-tabs {
+    display: flex; margin-bottom: 48px;
+    border: 1px solid var(--border); width: fit-content;
+  }
+  .filter-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 12px 24px; background: none; border: none;
+    color: var(--muted); cursor: pointer;
+    transition: color 0.2s, background 0.2s;
+    border-right: 1px solid var(--border);
+  }
+  .filter-btn:last-child { border-right: none; }
+  .filter-btn:hover { color: var(--text); background: var(--surface); }
+  .filter-btn.active {
+    color: #fff;
+    background: linear-gradient(90deg, var(--red), var(--blue));
+  }
+
+  .portfolio-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+  }
+  .portfolio-item {
+    position: relative; aspect-ratio: 4/3;
+    overflow: hidden; cursor: pointer; background: var(--card);
+    transition: transform 0.4s cubic-bezier(.16,1,.3,1);
+  }
+
+  .portfolio-media {
+    width: 100%; height: 100%;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--card);
+    transition: transform 0.5s cubic-bezier(.16,1,.3,1);
+  }
+  .portfolio-item:hover .portfolio-media { transform: scale(1.03); }
+
+  .portfolio-media img,
+  .portfolio-media video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    position: absolute; inset: 0;
+  }
+
+  /* Placeholder shown when no media is loaded */
+  .slot-label {
+    position: relative; z-index: 1;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px; line-height: 1.8;
+    color: var(--muted);
+    padding: 24px;
+    border: 1px dashed var(--border);
+    margin: 16px;
+  }
+  .slot-label span { font-size: 10px; color: #444; display: block; margin-top: 6px; }
+
+  /* Hide placeholder once real media loads */
+  .portfolio-media:has(img[src]:not([src=""])) .slot-label,
+  .portfolio-media:has(video[src]) .slot-label { display: none; }
+
+  .pv-1,.pv-2,.pv-3,.pv-4,.pv-5,.pv-6 { background: var(--card); }
+
+  .portfolio-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+    opacity: 0; transition: opacity 0.3s;
+    display: flex; flex-direction: column; justify-content: flex-end; padding: 28px;
+  }
+  .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+  .portfolio-cat {
+    font-family: 'Space Mono', monospace; font-size: 10px;
+    letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px;
+  }
+  .portfolio-cat.r { color: var(--red); }
+  .portfolio-cat.b { color: var(--blue); }
+  .portfolio-title { font-size: 18px; font-weight: 600; }
+  .portfolio-desc { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  .portfolio-badge {
+    position: absolute; top: 16px; right: 16px;
+    font-family: 'Space Mono', monospace; font-size: 9px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    background: rgba(8,8,8,0.8); border: 1px solid var(--red);
+    color: var(--red); padding: 5px 10px; backdrop-filter: blur(8px);
+  }
+  .portfolio-item.hidden { display: none; }
+
+  /* "View Collection" label on card */
+  .view-collection-hint {
+    position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+    font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: #fff;
+    background: rgba(8,8,8,0.7); border: 1px solid rgba(255,255,255,0.15);
+    padding: 6px 14px; white-space: nowrap;
+    opacity: 0; transition: opacity 0.3s; pointer-events: none;
+    backdrop-filter: blur(6px);
+  }
+  .portfolio-item:hover .view-collection-hint { opacity: 1; }
+
+  /* gallery-page — see bottom of stylesheet for full rule */
+
+  .gallery-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .gallery-back {
+    font-family: 'Space Mono', monospace; font-size: 12px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); background: none; border: none;
+    cursor: pointer; display: flex; align-items: center; gap: 10px;
+    transition: color 0.2s;
+  }
+  .gallery-back:hover { color: var(--red); }
+  .gallery-back::before { content: '←'; font-size: 16px; }
+  .gallery-title-bar {
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .gallery-cat-label {
+    font-family: 'Space Mono', monospace; font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--red);
+  }
+  .gallery-cat-label.b { color: var(--blue); }
+  .gallery-heading { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+  .gallery-count {
+    font-family: 'Space Mono', monospace; font-size: 11px;
+    color: var(--muted); letter-spacing: 0.1em;
+  }
+
+  .gallery-body {
+    flex: 1; overflow-y: auto; padding: 48px;
+  }
+.gallery-grid{
+  columns:4 320px;
+  column-gap:20px;
+  width:100%;
+}
+
+.gallery-card{
+  break-inside:avoid;
+  display:inline-block;
+  width:100%;
+  margin-bottom:20px;
+  background:var(--card);
+  border:1px solid var(--border);
+  overflow:hidden;
+  cursor:pointer;
+  transition:.3s ease;
+}
+
+.gallery-card:hover{
+  transform:translateY(-6px);
+}
+
+.gallery-card-media{
+  overflow:hidden;
+}
+
+.gallery-card-media img{
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+.gallery-card-media video{
+  width:100%;
+  display:block;
+}
+
+.gallery-card-info{
+  padding:18px;
+}
+
+.gallery-card-title{
+  font-size:18px;
+  font-weight:600;
+  margin-bottom:8px;
+}
+
+.gallery-card-desc{
+  color:var(--muted);
+  line-height:1.5;
+}
+
+@media(max-width:1200px){
+  .gallery-grid{
+    columns:3 280px;
+  }
+}
+
+@media(max-width:768px){
+  .gallery-grid{
+    columns:2 220px;
+  }
+}
+
+@media(max-width:500px){
+  .gallery-grid{
+    columns:1;
+  }
+}
+  /* Lightbox */
+  #lightbox {
+    position: fixed; inset: 0; z-index: 600;
+    background: rgba(0,0,0,0.95);
+    display: none; align-items: center; justify-content: center;
+    flex-direction: column;
+  }
+  #lightbox-media { max-width: 90vw; max-height: 80vh; object-fit: contain; }
+  #lightbox-media video { max-width: 90vw; max-height: 80vh; }
+  #lightbox-close {
+    position: absolute; top: 24px; right: 32px;
+    font-family: 'Space Mono', monospace; font-size: 13px;
+    letter-spacing: 0.1em; color: var(--muted);
+    background: none; border: none; cursor: pointer;
+    text-transform: uppercase; transition: color 0.2s;
+  }
+  #lightbox-close:hover { color: var(--red); }
+  #lightbox-caption {
+    margin-top: 20px; font-size: 14px; color: var(--muted);
+    text-align: center; max-width: 600px; padding: 0 24px;
+  }
+  #lightbox-arrows {
+    position: absolute; width: 100%; top: 50%;
+    transform: translateY(-50%);
+    display: flex; justify-content: space-between;
+    padding: 0 20px; pointer-events: none;
+  }
+  .lb-arrow {
+    font-size: 28px; color: var(--muted); background: rgba(8,8,8,0.7);
+    border: 1px solid var(--border); width: 48px; height: 48px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; pointer-events: all;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .lb-arrow:hover { color: var(--red); border-color: var(--red); }
+
+  /* ── HOVER PLAY VIDEO ── */
+  .play-hint {
+    position: absolute; z-index: 2;
+    width: 52px; height: 52px; border-radius: 50%;
+    background: rgba(8,8,8,0.75); border: 2px solid rgba(255,255,255,0.25);
+    color: #fff; font-size: 20px;
+    display: flex; align-items: center; justify-content: center;
+    padding-left: 4px; /* optical center for ▶ */
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+    backdrop-filter: blur(6px);
+  }
+  .hover-play-card:hover .play-hint {
+    opacity: 0; transform: scale(1.15);
+  }
+
+  /* ── GALLERY COVER HERO ── */
+  /* ── GALLERY COVER HERO ── */
+  .gallery-cover-hero {
+    position: relative; width: 100%; height: 55vh;
+    overflow: hidden; margin-bottom: 48px;
+    background: var(--card);
+  }
+  .gallery-cover-hero img,
+  .gallery-cover-hero video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+  }
+  .gallery-cover-hero-slot {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace; font-size: 13px;
+    color: var(--muted); border: 1px dashed var(--border);
+    flex-direction: column; gap: 8px; text-align: center; padding: 24px;
+  }
+  .gallery-cover-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(5,5,5,0.92) 0%, rgba(5,5,5,0.1) 60%, transparent 100%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 40px 48px;
+  }
+  .gallery-cover-tag {
+    font-family: 'Space Mono', monospace; font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .gallery-cover-tag.r { color: var(--red); }
+  .gallery-cover-tag.b { color: var(--blue); }
+  .gallery-cover-title { font-size: clamp(28px, 4vw, 48px); font-weight: 700; letter-spacing: -0.02em; }
+  .gallery-cover-desc { color: var(--muted); margin-top: 8px; font-size: 15px; max-width: 520px; }
+
+  /* Gallery YouTube card */
+  .gallery-card-yt-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Space Mono', monospace; font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--red); text-decoration: none;
+    border: 1px solid rgba(255,30,30,0.4); padding: 7px 14px;
+    margin-top: 10px; transition: background 0.2s;
+  }
+  .gallery-card-yt-link:hover { background: var(--red-dim); }
+  .gallery-card-yt-link svg { flex-shrink: 0; }
+
+  /* ── SERVICES ── */
+  #services { background: var(--surface); }
+  .services-list { display: flex; flex-direction: column; }
+  .service-row {
+    display: flex; align-items: center; padding: 32px 0;
+    border-top: 1px solid var(--border); gap: 40px;
+    transition: padding-left 0.3s; cursor: default;
+  }
+  .service-row:last-child { border-bottom: 1px solid var(--border); }
+  .service-row:hover { padding-left: 20px; }
+  .service-num {
+    font-family: 'Space Mono', monospace; font-size: 12px; min-width: 40px;
+  }
+  .service-num.r { color: var(--red); }
+  .service-num.b { color: var(--blue); }
+  .service-name {
+    flex: 1; font-size: clamp(22px, 3vw, 36px);
+    font-weight: 600; letter-spacing: -0.01em; transition: color 0.2s;
+  }
+  .service-row:nth-child(odd):hover .service-name { color: var(--red); }
+  .service-row:nth-child(even):hover .service-name { color: var(--blue); }
+  .service-tools {
+    font-family: 'Space Mono', monospace; font-size: 11px;
+    color: var(--muted); letter-spacing: 0.06em;
+    text-align: right; max-width: 220px;
+  }
+  .service-arrow { font-size: 24px; transform: rotate(-45deg); transition: transform 0.3s, color 0.3s; }
+  .service-row:nth-child(odd) .service-arrow { color: var(--red); }
+  .service-row:nth-child(even) .service-arrow { color: var(--blue); }
+  .service-row:hover .service-arrow { transform: rotate(0deg); }
+
+  /* ── EXPERIENCE ── */
+  #experience { background: var(--black); }
+  .exp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .exp-card {
+    border: 1px solid var(--border); background: var(--card);
+    padding: 36px; position: relative; overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .exp-card::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; transform: scaleY(0);
+    transition: transform 0.3s; transform-origin: bottom;
+  }
+  .exp-card:nth-child(odd)::before { background: var(--red); }
+  .exp-card:nth-child(even)::before { background: var(--blue); }
+  .exp-card:hover { border-color: rgba(255,30,30,0.3); }
+  .exp-card:nth-child(even):hover { border-color: rgba(30,111,255,0.3); }
+  .exp-card:hover::before { transform: scaleY(1); }
+  .exp-date {
+    font-family: 'Space Mono', monospace; font-size: 10px;
+    letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 16px;
+  }
+  .exp-date.r { color: var(--red); }
+  .exp-date.b { color: var(--blue); }
+  .exp-role { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+  .exp-company { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+  .exp-bullets { list-style: none; }
+  .exp-bullets li {
+    font-size: 14px; color: var(--muted); padding: 6px 0;
+    border-bottom: 1px solid var(--border); line-height: 1.5;
+    display: flex; gap: 12px;
+  }
+  .exp-bullets li:last-child { border-bottom: none; }
+  .exp-bullets.r li::before { content: '→'; color: var(--red); flex-shrink: 0; }
+  .exp-bullets.b li::before { content: '→'; color: var(--blue); flex-shrink: 0; }
+  .exp-clients {
+    margin-top: 16px; font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 0.08em; color: var(--muted);
+    text-transform: uppercase; line-height: 1.8;
+  }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--surface); text-align: center; }
+  .contact-big {
+    font-size: clamp(48px, 8vw, 100px); font-weight: 700;
+    letter-spacing: -0.03em; line-height: 1; margin-bottom: 32px;
+  }
+  .contact-big .word-red { color: var(--red); }
+  .contact-big .word-blue { color: var(--blue); }
+  .contact-links {
+    display: flex; gap: 24px; justify-content: center;
+    flex-wrap: wrap; margin-top: 48px;
+  }
+  .contact-link {
+    font-family: 'Space Mono', monospace; font-size: 12px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text); text-decoration: none;
+    border: 1px solid var(--border); padding: 16px 32px;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .contact-link:hover { border-color: var(--red); color: var(--red); background: var(--red-dim); }
+  .contact-link.blue-link:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-dim); }
+  .contact-link.primary {
+    color: #fff;
+    background: linear-gradient(90deg, var(--red), var(--blue));
+    border: none;
+  }
+  .contact-link.primary:hover { opacity: 0.82; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black); border-top: 1px solid var(--border);
+    padding: 32px 48px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-logo {
+    font-family: 'Space Mono', monospace; font-size: 12px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    background: linear-gradient(90deg, var(--red), var(--blue));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .footer-copy {
+    font-family: 'Space Mono', monospace; font-size: 11px;
+    color: var(--muted); letter-spacing: 0.06em;
+  }
+
+
+
+  /* noise */
+  body::after {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9997;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.025; mix-blend-mode: overlay;
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(.16,1,.3,1); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    #hero { padding: 0 24px 60px; }
+    .about-grid { grid-template-columns: 1fr; gap: 48px; }
+    .portfolio-grid { grid-template-columns: 1fr 1fr; }
+    .exp-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+    .contact-big { font-size: clamp(36px, 10vw, 60px); }
+    .filter-tabs { flex-wrap: wrap; }
+  }
+  #gallery-page{
+  position:fixed;
+  inset:0;
+  background:#050505;
+  z-index:9999;
+  overflow-y:auto;
+  display:none;
+  opacity:0;
+  transition: opacity 0.35s ease;
+}
+#gallery-page.open{
+  opacity:1;
+}
+
+
+#lightbox{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.95);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  z-index:10000;
+}
+
+#lightbox.open{
+  display:flex;
+}
+
+#lightbox-caption{
+  margin-top:20px;
+  color:white;
+}
+
+.lb-arrow{
+  cursor:pointer;
+  font-size:60px;
+  user-select:none;
+}
+
+#lightbox-arrows{
+  position:absolute;
+  width:100%;
+  top:50%;
+  display:flex;
+  justify-content:space-between;
+  padding:0 30px;
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">ELS</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#portfolio">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="mailto:Ernestolopezmw@gmail.com">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow-red"></div>
+  <div class="hero-glow-blue"></div>
+  <div class="hero-eyebrow">Columbia, SC · Available for Projects</div>
+  <h1 class="hero-name">
+    <span class="line-red">Ernesto</span><br>
+    <span class="line-split">Lopez</span><br>
+    <span class="line-blue">Sanchez</span>
+  </h1>
+  <p class="hero-desc">Media & communications creative — combining visual storytelling, motion design, and technical depth to produce work that moves people and brands forward.</p>
+  <div class="hero-tags">
+    <span class="tag red">Photography</span>
+    <span class="tag red">Videography</span>
+    <span class="tag red">Graphic Design</span>
+    <span class="tag red">3D Animation</span>
+    <span class="tag red">Web Development</span>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="section-label reveal">About</div>
+      <h2 class="section-title reveal">Both sides<br>of the lens.</h2>
+      <p class="reveal"><strong>I bridge creative vision and technical execution.</strong> Whether I'm capturing a frame, engineering a soundscape, or building a brand identity from scratch — I bring the same obsessive attention to craft across every medium.</p>
+      <p class="reveal">Currently completing a Bachelor's in Media, News & Sports at the University of South Carolina with a Minor in Applied Computer Science. My client list spans governors, law firms, banks, and local businesses — each project a different visual problem to solve.</p>
+      <div class="stat-row reveal">
+        <div><div class="stat-num b">5+</div><div class="stat-label">Years<br>Creating</div></div>
+        <div><div class="stat-num b">20+</div><div class="stat-label">Clients<br>Served</div></div>
+      </div>
+    </div>
+    <div class="skills-grid reveal">
+      <div class="skill-item"><div class="skill-name">Adobe Suite</div><div class="skill-detail">Premiere · After Effects · Photoshop · Illustrator · InDesign · Lightroom</div></div>
+      <div class="skill-item"><div class="skill-name">3D & Motion</div><div class="skill-detail">Blender · After Effects · Motion Graphics</div></div>
+      <div class="skill-item"><div class="skill-name">Development</div><div class="skill-detail">HTML · CSS · Python · Java · Web Design</div></div>
+      <div class="skill-item"><div class="skill-name">Production</div><div class="skill-detail">Camera Operation · Sound Engineering · Lighting · Low Voltage</div></div>
+      <div class="skill-item"><div class="skill-name">IT / Networking</div><div class="skill-detail">IP Config · Routing · Subnetting · Security · Cabling</div></div>
+      <div class="skill-item"><div class="skill-name">Languages</div><div class="skill-detail">English · Spanish (Native) · French (Moderate)</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-label blue-label reveal">Portfolio</div>
+  <h2 class="section-title reveal">Selected Work</h2>
+  <p class="section-sub reveal">A cross-discipline body of work spanning commercial clients, personal projects, and experimental pieces.</p>
+
+  <div class="filter-tabs reveal">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="photo">Photography</button>
+    <button class="filter-btn" data-filter="video">Videography</button>
+    <button class="filter-btn" data-filter="design">Graphic Design</button>
+    <button class="filter-btn" data-filter="3d">3D / Animation</button>
+    <button class="filter-btn" data-filter="web">Web</button>
+  </div>
+
+  <div class="portfolio-grid">
+  
+      <!-- ══════════════════════════════════════════════════════
+         CARD 1 — 3D Animation  (scroll to play)
+    ══════════════════════════════════════════════════════ -->
+    <div class="portfolio-item hover-play-card" data-cat="3d" data-gallery="3d" onclick="openGallery('3d')">
+      <div class="portfolio-media">
+        <!-- ▼ REPLACE videos/3d-cover.mp4 with your actual file path -->
+        <video muted loop playsinline preload="metadata" class="hover-play-video">
+          <source src="Videos/final.mp4" type="video/mp4">
+        </video>
+        <div class="play-hint">▶</div>
+      </div> 
+      <div class="portfolio-overlay">
+        <div class="portfolio-cat b">3D Animation</div>
+        <div class="portfolio-title">Blender and other 3D Animations</div>
+        <div class="portfolio-desc">Click to view collection</div>
+      </div>
+      <div class="view-collection-hint">View Collection →</div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         CARD 2 — Photography (cover = first image in gallery)
+         Change "cover" src to your best photo for this category.
+         Add as many items as you want inside data-items below.
+    ══════════════════════════════════════════════════════ -->
+    <div class="portfolio-item" data-cat="photo" data-gallery="photo" onclick="openGallery('photo')">
+      <div class="portfolio-media">
+        <!-- COVER IMAGE — replace src with your file, e.g. src="images/photo-cover.jpg" -->
+        <img src="pictures/pic1.jpeg" alt="Photography Cover"
+          onerror="this.style.display='none'"
+          onload="this.parentElement.classList.remove('empty-slot')">
+        <div class="slot-label">📷 PHOTOGRAPHY<br><span>Set cover: replace src="" above</span></div>
+      </div>
+      <div class="portfolio-overlay">
+        <div class="portfolio-cat r">Photography</div>
+        <div class="portfolio-title">Photography</div>
+        <div class="portfolio-desc">Click to view full collection</div>
+      </div>
+      <div class="view-collection-hint">View Collection →</div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         CARD 3 — Videography (scroll to play)
+    ══════════════════════════════════════════════════════ -->
+    <div class="portfolio-item hover-play-card" data-cat="video" data-gallery="video" onclick="openGallery('video')">
+      <div class="portfolio-media">
+        <!-- ▼ REPLACE videos/video-cover.mp4 with your actual file path -->
+        <video muted loop playsinline preload="metadata" class="hover-play-video">
+          <source src="videos/project1.mp4" type="video/mp4">
+        </video>
+        <div class="play-hint">▶</div>
+      </div>
+      <div class="portfolio-overlay">
+        <div class="portfolio-cat r">Videography</div>
+        <div class="portfolio-title">Short films and other videos.</div>
+        <div class="portfolio-desc">Click to view collection</div>
+      </div>
+      <div class="view-collection-hint">View Collection →</div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         CARD 4 — Graphic Design
+    ══════════════════════════════════════════════════════ -->
+    <div class="portfolio-item" data-cat="design" data-gallery="design" onclick="openGallery('design')">
+      <div class="portfolio-media">
+        <img src="Pictures/graph2.jpg" alt="Graphic Design Cover"
+          onerror="this.style.display='none'">
+        <div class="slot-label">🎨 GRAPHIC DESIGN<br><span>Set cover: replace src="" above</span></div>
+      </div>
+      <div class="portfolio-overlay">
+        <div class="portfolio-cat b">Graphic Design</div>
+        <div class="portfolio-title">Brand Identity</div>
+        <div class="portfolio-desc">Click to view full collection</div>
+      </div>
+      <div class="view-collection-hint">View Collection →</div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         CARD 5 — Web Development
+    ══════════════════════════════════════════════════════ -->
+    <div class="portfolio-item hover-play-card" data-cat="video" data-gallery="video" onclick="openGallery('video')">
+      <div class="portfolio-media">
+        <!-- ▼ REPLACE videos/video-cover.mp4 with your actual file path -->
+        <video muted loop playsinline preload="metadata" class="hover-play-video">
+          <source src="videos/introtrim.webm" type="video/mp4">
+        </video>
+        <div class="play-hint">▶</div>
+      </div>
+      <div class="portfolio-overlay">
+        <div class="portfolio-cat r">Web Design & Development</div>
+        <div class="portfolio-title">Web Design & Development</div>
+        <div class="portfolio-desc">Click to view collection</div>
+      </div>
+      <div class="view-collection-hint">View Collection →</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     GALLERY PAGE — full-screen overlay, one per category
+     To add items to a gallery, find the matching <div id="gallery-*">
+     and copy/paste one of the .gallery-card blocks, updating the
+     src, title, and description.
+════════════════════════════════════════════════════════════════ -->
+<div id="gallery-page">
+  <div class="gallery-nav">
+    <button class="gallery-back" onclick="closeGallery()">Back to Portfolio</button>
+    <div class="gallery-title-bar">
+      <div class="gallery-cat-label" id="gallery-label">Photography</div>
+      <div class="gallery-heading" id="gallery-heading">Commercial Events</div>
+    </div>
+    <div class="gallery-count" id="gallery-count">0 works</div>
+  </div>
+  <div class="gallery-body">
+
+    <!-- ══════════════════════════════════════════════════════
+         PHOTOGRAPHY COLLECTION
+         ─ Cover hero: replace src="" on the <img> below.
+         ─ Add more photos: copy a .gallery-card block and paste
+           before the closing </div>, updating src/title/desc.
+    ══════════════════════════════════════════════════════ -->
+    <div class="gallery-section" id="gallery-photo">
+
+      <!-- COVER HERO — replace src="" with your best photo e.g. src="images/photo-cover.jpg" -->
+      <div class="gallery-cover-hero">
+        <img src="pictures/pic1.jpeg" alt="Photography Cover" onerror="this.style.display='none'">
+        <div class="gallery-cover-hero-slot" id="photo-cover-slot">
+        </div>
+        <div class="gallery-cover-overlay">
+          <div class="gallery-cover-tag r">Photography</div>
+          <div class="gallery-cover-title">Photography</div>
+          <div class="gallery-cover-desc">Broad Photography</div>
+        </div>
+      </div>
+
+      <div class="gallery-grid">
+
+		<div class="gallery-card" data-type="image" data-src="pictures/pic1.jpeg" data-caption="12" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <img src="pictures/pic1.jpeg" alt="Photo 12" onerror="this.style.display='none'">
+          </div>
+        </div>
+
+        <div class="gallery-card" data-type="image" data-src="pictures/pic2.jpeg" data-caption="1" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <img src="pictures/pic2.jpeg" alt="Photo 1" onerror="this.style.display='none'">
+          </div>
+        </div>
+
+        <div class="gallery-card" data-type="image" data-src="pictures/pic9.jpg" data-caption="2" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <img src="pictures/pic9.jpg" alt="Photo 2" onerror="this.style.display='none'">
+          </div>
+        </div>
+
+        <div class="gallery-card" data-type="image" data-src="pictures/pic7.jpeg" data-caption="3" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <img src="pictures/pic7.jpeg" alt="Photo 3" onerror="this.style.display='none'">
+          </div>
+        </div>
+		
+		<div class="gallery-card" data-type="image" data-src="pictures/pic3.jpeg" data-caption="4" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <img src="pictures/pic3.jpeg" alt="Photo 4" onerror="this.style.display='none'">
+          </div>
+        </div>
+		
+		<div class="gallery-card" data-type="image" data-src="pictures/pic4.jpeg" data-caption="5" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <img src="pictures/pic4.jpeg" alt="Photo 5" onerror="this.style.display='none'">
+          </div>
+        </div>
+		
+		<div class="gallery-card" data-type="image" data-src="pictures/pic6.jpeg" data-caption="6" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <img src="pictures/pic6.jpeg" alt="Photo 6" onerror="this.style.display='none'">
+          </div>
+        </div>
+
+		<div class="gallery-card" data-type="image" data-src="pictures/pic10.jpg" data-caption="7" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <img src="pictures/pic10.jpg" alt="Photo 7" onerror="this.style.display='none'">
+          </div>
+        </div>
+
+		<div class="gallery-card" data-type="image" data-src="pictures/pic8.jpg" data-caption="8" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <img src="pictures/pic8.jpg" alt="Photo 8" onerror="this.style.display='none'">
+          </div>
+        </div>
+
+		<div class="gallery-card" data-type="image" data-src="pictures/pic11.jpg" data-caption="9" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <img src="pictures/pic11.jpg" alt="Photo 9" onerror="this.style.display='none'">
+          </div>
+        </div>
+		
+		<!--<div class="gallery-card" data-type="image" data-src="" data-caption="First Palmetto Bank" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <img src="" alt="Photo 3" onerror="this.style.display='none'">
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">First Palmetto Bank</div>
+            <div class="gallery-card-desc">Commercial photography for First Palmetto Bank.</div>
+          </div>
+        </div> -->
+
+      </div>
+    </div><!-- /gallery-photo -->
+
+    <!-- ══════════════════════════════════════════════════════
+         VIDEOGRAPHY COLLECTION
+         ─ Cover: add <source src="videos/video-cover.mp4"> in the cover <video> below.
+         ─ YouTube links: fill in data-yt="https://youtu.be/XXXX" on any card.
+         ─ Add more: copy a .gallery-card block and update src/title/desc/data-yt.
+    ══════════════════════════════════════════════════════ -->
+    <div class="gallery-section" id="gallery-video" style="display:none">
+
+      <!-- COVER HERO — add <source src="videos/video-cover.mp4" type="video/mp4"> below -->
+      <div class="gallery-cover-hero">
+        <video muted loop playsinline>
+			<source src="videos/project1.mp4" type="video/mp4">
+        </video>
+        <div class="gallery-cover-hero-slot" id="video-cover-slot">
+        </div>
+        <div class="gallery-cover-overlay">
+          <div class="gallery-cover-tag r">Videography</div>
+          <div class="gallery-cover-title">Short Films and Promotional Ads</div>
+          <div class="gallery-cover-desc">Short films and promotional ads for clients and projects across South Carolina.</div>
+        </div>
+      </div>
+
+      <div class="gallery-grid">
+
+        <div class="gallery-card" data-type="video" data-src="project1.mp4" data-caption="The Cowboy" data-yt="" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <video muted loop playsinline>
+              <source src="videos/project1.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">Short </div>
+            <div class="gallery-card-desc">Short film of mine.</div>
+          </div>
+        </div>
+
+        <div class="gallery-card" data-type="video" data-src="videos/TheMicpt2.mp4" data-caption="The Mic" data-yt="" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <video muted loop playsinline>
+            <source src="videos/TheMicpt2.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">The Mic</div>
+            <div class="gallery-card-desc">A music video documentary.</div>
+          </div>
+        </div>
+
+        <div class="gallery-card" data-type="video" data-src="videos/Jtsad.mp4" data-caption="JT's Auto" data-yt="" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <video muted loop playsinline>
+            <source src="videos/Jtsad.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">JT's Auto</div>
+            <div class="gallery-card-desc">Promotional video for JT's Auto.</div>
+          </div>
+        </div>
+
+        <div class="gallery-card" data-type="video" data-src="videos/commbreak.mp4" data-caption="Communication Breakdown" data-yt="" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <video muted loop playsinline>
+            <source src="videos/commbreak.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">Led Zeppelin</div>
+            <div class="gallery-card-desc">Simple Led Zeppelin animation.</div>
+          </div>
+        </div>
+		
+		<div class="gallery-card" data-type="video" data-src="videos/finalsound.mp4" data-caption="Short Sound" data-yt="" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <video muted loop playsinline>
+            <source src="videos/finalsound.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">Short film</div>
+            <div class="gallery-card-desc">Short film mostly dealing with sound.</div>
+          </div>
+        </div>
+
+		<div class="gallery-card" data-type="video" data-src="" data-caption="The Other Side" data-yt="https://www.youtube.com/watch?v=g9H3q4QqsyI&t=9s" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <video muted loop playsinline>
+            <source src="" type="video/mp4">
+            </video>
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">The Other Side</div>
+            <div class="gallery-card-desc">A short film about Men's mental health.</div>
+          </div>
+        </div>
+
+		<div class="gallery-card" data-type="video" data-src="" data-caption="The Other Side" data-yt="https://www.youtube.com/watch?v=1XAX9wMb5AY" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <video muted loop playsinline>
+            <source src="" type="video/mp4">
+            </video>
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">The Other Side Trailer</div>
+            <div class="gallery-card-desc">Trailor for The Other Side.</div>
+          </div>
+        </div>
+		
+		<div class="gallery-card" data-type="video" data-src="" data-caption="The Other Side" data-yt="https://www.youtube.com/watch?v=-6SmZmxnj7g&t=656s" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <video muted loop playsinline>
+            <source src="" type="video/mp4">
+            </video>
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">The Mic Full Documentary</div>
+            <div class="gallery-card-desc">Two artists in different stages come to show what makes them the artist they are.</div>
+          </div>
+        </div>
+        <!-- ╔══════════════════════════════════════════════════════╗
+             ║  HOW TO ADD MORE VIDEOS                            ║
+             ║  1. Copy the block below                           ║
+             ║  2. Paste above this comment                       ║
+             ║  3. Add your file inside the <source> tag          ║
+             ║  4. Set data-src to the same path (for lightbox)   ║
+             ║  5. Set data-yt="https://youtu.be/XXXX" for a      ║
+             ║     YouTube button (leave "" to skip)              ║
+             ╚══════════════════════════════════════════════════════╝
+
+        COPY THIS BLOCK TO ADD A VIDEO:
+        <div class="gallery-card" data-type="video" data-src="videos/YOURFILE.mp4" data-caption="Your Caption" data-yt="https://youtu.be/XXXX" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <video muted loop playsinline>
+              <source src="videos/YOURFILE.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">Title Here</div>
+            <div class="gallery-card-desc">Short description here.</div>
+          </div>
+        </div>
+        -->
+
+      </div>
+    </div><!-- /gallery-video -->
+
+    <!-- ══════════════════════════════════════════════════════
+         3D / ANIMATION COLLECTION
+         ─ Cover: add <source src="videos/3d-cover.mp4"> in cover <video>.
+         ─ YouTube links: fill in data-yt="https://youtu.be/XXXX" on any card.
+         ─ For video cards: also set data-src="videos/yourfile.mp4"
+         ─ For still renders: use data-type="image" and <img src="...">
+    ══════════════════════════════════════════════════════ -->
+    <div class="gallery-section" id="gallery-3d" style="display:none">
+
+      <!-- COVER HERO — add <source src="videos/3d-cover.mp4" type="video/mp4"> below -->
+      <div class="gallery-cover-hero">
+        <video muted loop playsinline>
+          <source src="videos/final.mp4" type="video/mp4">
+        </video>
+        <div class="gallery-cover-hero-slot" id="3d-cover-slot">
+        </div>
+        <div class="gallery-cover-overlay">
+          <div class="gallery-cover-tag b">3D Animation</div>
+          <div class="gallery-cover-title">Blender Work</div>
+          <div class="gallery-cover-desc">Product animations, motion graphics, and environment renders in Blender & After Effects.</div>
+        </div>
+      </div>
+
+      <div class="gallery-grid">
+
+        <div class="gallery-card" data-type="video" data-src="videos/final.mp4" data-caption="Blender Car Drifting Animation" data-yt="" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <video muted loop playsinline>
+              <source src="videos/final.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">Car Drifting</div>
+            <div class="gallery-card-desc">Car drifting animation done in Blender.</div>
+          </div>
+        </div>
+		
+        <div class="gallery-card" data-type="video" data-src="videos/Bank_Heist.mp4" data-caption="Bank Heist" data-yt="" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <video muted loop playsinline>
+              <source src="videos/Bank_Heist.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">Bank Heist</div>
+            <div class="gallery-card-desc">Simple animation.</div>
+          </div>
+        </div>
+
+        <div class="gallery-card" data-type="video" data-src="videos/final_pool.mp4" data-caption="JT's Jeep Breaks Into Savings!" data-yt="" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <video muted loop playsinline>
+              <source src="videos/final_pool.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">JTs Pool Break</div>
+            <div class="gallery-card-desc">Animation for Jt's Jeep</div>
+          </div>
+        </div>
+
+        <!-- 3D still render (no YouTube needed, but you can add data-yt if it's a render reel) 
+        <div class="gallery-card" data-type="image" data-src="" data-caption="3D Still Render" data-yt="" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <img src="" alt="3D Render" onerror="this.style.display='none'">
+            <div class="slot-label">🧊 3D Still 2<br><span>src="" → e.g. src="images/render2.jpg"</span></div>
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">Environment Render</div>
+            <div class="gallery-card-desc">Architectural visualization in Blender.</div>
+          </div>
+        </div> -->
+
+        <!-- ╔══════════════════════════════════════════════════════╗
+             ║  HOW TO ADD MORE 3D WORK                           ║
+             ║  For a VIDEO render: copy the video block below    ║
+             ║  For a STILL render: copy the image block below    ║
+             ║  Set data-yt for a YouTube link, or leave ""       ║
+             ╚══════════════════════════════════════════════════════╝
+
+        VIDEO RENDER — COPY THIS BLOCK:
+        <div class="gallery-card" data-type="video" data-src="videos/YOURRENDER.mp4" data-caption="Caption" data-yt="https://youtu.be/XXXX" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <video muted loop playsinline>
+              <source src="videos/YOURRENDER.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">Title</div>
+            <div class="gallery-card-desc">Description.</div>
+          </div>
+        </div>
+
+        STILL RENDER — COPY THIS BLOCK:
+        <div class="gallery-card" data-type="image" data-src="images/YOURRENDER.jpg" data-caption="Caption" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <img src="images/YOURRENDER.jpg" alt="Render" onerror="this.style.display='none'">
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">Title</div>
+            <div class="gallery-card-desc">Description.</div>
+          </div>
+        </div>
+        -->
+
+      </div>
+    </div><!-- /gallery-3d -->
+
+    <!-- ══════════════════════════════════════════════════════
+         GRAPHIC DESIGN COLLECTION
+    ══════════════════════════════════════════════════════ -->
+    <div class="gallery-section" id="gallery-design" style="display:none">
+
+      <!-- COVER HERO — replace src="" with your best design image -->
+      <div class="gallery-cover-hero">
+        <img src="pictures/graph2.jpg" alt="Design Cover" onerror="this.style.display='none'">
+        <div class="gallery-cover-hero-slot" id="design-cover-slot">
+        </div>
+        <div class="gallery-cover-overlay">
+          <div class="gallery-cover-tag b">Graphic Design</div>
+          <div class="gallery-cover-title">Brand Identity</div>
+          <div class="gallery-cover-desc">Logos, print, and visual systems for clients across industries.</div>
+        </div>
+      </div>
+
+      <div class="gallery-grid">
+
+        <div class="gallery-card" data-type="image" data-src="pictures/graph1.jpg" data-caption="Brand Identity System" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <img src="pictures/graph1.jpg" alt="Design 1" onerror="this.style.display='none'">
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">Brand Identity System</div>
+            <div class="gallery-card-desc">Logo, color, typography system for a local client.</div>
+          </div>
+        </div>
+
+        <div class="gallery-card" data-type="image" data-src="pictures/graph2.jpg" data-caption="Print Design" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <img src="pictures/graph2.jpg" alt="Design 2" onerror="this.style.display='none'">
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">Nick Harbor</div>
+            <div class="gallery-card-desc">Poster of Nick Harbor.</div>
+          </div>
+        </div>
+
+        <div class="gallery-card" data-type="image" data-src="pictures/graph3.jpg" data-caption="Print Design" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <img src="pictures/graph3.jpg" alt="Design 3" onerror="this.style.display='none'">
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">The Other Side</div>
+            <div class="gallery-card-desc">The Other Side poster.</div>
+          </div>
+        </div>
+
+        <!-- ╔══════════════════════════════════════════════════════╗
+             ║  HOW TO ADD MORE DESIGNS                           ║
+             ║  Same as photos — copy the photo block template    ║
+             ╚══════════════════════════════════════════════════════╝
+
+        COPY THIS BLOCK TO ADD A DESIGN:
+        <div class="gallery-card" data-type="image" data-src="images/YOURFILE.jpg" data-caption="Your Caption" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <img src="images/YOURFILE.jpg" alt="Design" onerror="this.style.display='none'">
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">Title Here</div>
+            <div class="gallery-card-desc">Short description here.</div>
+          </div>
+        </div>
+        -->
+
+      </div>
+    </div><!-- /gallery-design -->
+
+    <!-- ══════════════════════════════════════════════════════
+         WEB DESIGN COLLECTION
+    ══════════════════════════════════════════════════════ -->
+    <div class="gallery-section" id="gallery-web" style="display:none">
+
+      <!-- COVER HERO -->
+      <div class="gallery-cover-hero">
+        <video muted loop playsinline>
+          <source src="videos/introtrim.webm" type="video/mp4">
+        </video>
+        <div class="gallery-cover-hero-slot" id="3d-cover-slot">
+        </div>
+        <div class="gallery-cover-overlay">
+          <div class="gallery-cover-tag b">Web Design</div>
+          <div class="gallery-cover-title">Web Design</div>
+          <div class="gallery-cover-desc">Web design and animation.</div>
+        </div>
+      </div>
+
+      <div class="gallery-grid">
+
+        <div class="gallery-card" data-type="video" data-src="videos/introtrim.webm" data-caption="intro" data-yt="" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <video muted loop playsinline>
+              <source src="videos/introtrim.webm" type="video/mp4">
+            </video>
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">Website Intro</div>
+            <div class="gallery-card-desc">Website intro animation for a hook.</div>
+          </div>
+        </div>
+		
+        <div class="gallery-card" data-type="video" data-src="videos/discwork.mp4" data-caption="intro" data-yt="" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <video muted loop playsinline>
+              <source src="videos/discwork.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">Section</div>
+            <div class="gallery-card-desc">Section on hover animations.</div>
+          </div>
+        </div>
+
+        <!-- ADD MORE WEB PROJECTS HERE -->
+
+      </div>
+    </div><!-- /gallery-web -->
+
+  </div><!-- /gallery-body -->
+</div><!-- /gallery-page -->
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button id="lightbox-close" onclick="closeLightbox()">✕ Close</button>
+  <div id="lightbox-arrows">
+    <div class="lb-arrow" onclick="lightboxStep(-1)">‹</div>
+    <div class="lb-arrow" onclick="lightboxStep(1)">›</div>
+  </div>
+  <img id="lightbox-img" style="display:none; max-width:90vw; max-height:80vh; object-fit:contain;">
+  <video id="lightbox-vid" controls style="display:none; max-width:90vw; max-height:80vh;"></video>
+  <div id="lightbox-caption"></div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-label reveal">Services</div>
+  <h2 class="section-title reveal">What I Do</h2>
+  <div class="services-list">
+    <div class="service-row reveal"><span class="service-num r">01</span><span class="service-name">Photography & Videography</span><span class="service-tools">Canon · Premiere Pro · Lightroom</span><span class="service-arrow">→</span></div>
+    <div class="service-row reveal"><span class="service-num b">02</span><span class="service-name">Graphic Design & Branding</span><span class="service-tools">Illustrator · InDesign · Photoshop</span><span class="service-arrow">→</span></div>
+    <div class="service-row reveal"><span class="service-num r">03</span><span class="service-name">Motion & 3D Animation</span><span class="service-tools">Blender · After Effects</span><span class="service-arrow">→</span></div>
+    <div class="service-row reveal"><span class="service-num b">04</span><span class="service-name">Website Design & Development</span><span class="service-tools">HTML · CSS · Python · JavaScript</span><span class="service-arrow">→</span></div>
+    <div class="service-row reveal"><span class="service-num r">05</span><span class="service-name">Sound Engineering</span><span class="service-tools">Live Events · Post Production</span><span class="service-arrow">→</span></div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label blue-label reveal">Experience</div>
+  <h2 class="section-title reveal">Where I've<br>Worked</h2>
+  <p class="section-sub reveal">From government clients to law firms, each role pushed creative and technical limits.</p>
+  <div class="exp-grid">
+    <div class="exp-card reveal">
+      <div class="exp-date r">Jan 2024 — May 2025</div>
+      <div class="exp-role">AV Tech · Media Producer</div>
+      <div class="exp-company">Sound & Images · Columbia, SC</div>
+      <ul class="exp-bullets r">
+        <li>Videography, photography, graphic design & sound for clients and events</li>
+        <li>Administered local company network — IPs, routing, subnetting & security</li>
+        <li>Low voltage cabling and full AV infrastructure</li>
+      </ul>
+      <div class="exp-clients">Clients: Henry McMaster · Blue Cross Blue Shield<br>First Palmetto Bank · State Capitol</div>
+    </div>
+    <div class="exp-card reveal">
+      <div class="exp-date b">April 2026 — Current</div>
+      <div class="exp-role">Production Intern</div>
+      <div class="exp-company">Genesis Studios · Columbia, SC</div>
+      <ul class="exp-bullets b">
+        <li>Created promotional content using Blender and After Effects</li>
+        <li>Produced client-facing deliverables end-to-end</li>
+        <li>Collaborative production workflow for commercial clients</li>
+      </ul>
+      <div class="exp-clients">Clients: Mayor of Cayce · George Sink Injury Lawyer · JT's Auto</div>
+    </div>
+    <div class="exp-card reveal">
+      <div class="exp-date r">April 2026</div>
+      <div class="exp-role">Production Intern</div>
+      <div class="exp-company">Applause Studios · Columbia, SC</div>
+      <ul class="exp-bullets r">
+        <li>On-set production and camera operation</li>
+        <li>Sound department support</li>
+      </ul>
+    </div>
+    <div class="exp-card reveal">
+      <div class="exp-date b">Class of 2026</div>
+      <div class="exp-role">B.S. Media, News & Sports</div>
+      <div class="exp-company">University of South Carolina</div>
+      <ul class="exp-bullets b">
+        <li>Minor in Applied Computer Science</li>
+        <li>SGTV Student Organization — News & Sports Camera</li>
+        <li>1080c Student Film Creation</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label reveal" style="justify-content:center">Contact</div>
+  <h2 class="contact-big reveal">Let's Make<br>Something<span class="word-red">.</span></h2>
+  <p class="section-sub reveal" style="margin:0 auto;text-align:center">Have a project in mind? Reach out — whether it's a brand film, a website, a 3D spot, or something that doesn't fit a category yet.</p>
+  <div class="contact-links reveal">
+    <a class="contact-link primary" href="mailto:Ernestolopezmw@gmail.com"><span>✉</span> Email Me</a>
+    <a class="contact-link" href="tel:8644821846"><span>✆</span> 864 482 1846</a>
+    <a class="contact-link blue-link" href="https://ernestol68.wixsite.com/just-ernesto-lopez-s" target="_blank"><span>↗</span> Portfolio Site</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Ernesto Lopez-Sanchez</div>
+  <div class="footer-copy">© 2026 · Columbia, SC · Bilingual EN / ES / FR</div>
+</footer>
+
+<script>
+/* ==========================
+   FILTER TABS
+========================== */
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    document.querySelectorAll('.portfolio-item').forEach(item => {
+      item.classList.toggle('hidden', filter !== 'all' && item.dataset.cat !== filter);
+    });
+  });
+});
+
+/* ==========================
+   SCROLL-TRIGGERED VIDEO AUTOPLAY
+   Portfolio cards with video play when they enter the viewport.
+========================== */
+const videoPlayObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    const video = e.target.querySelector('.hover-play-video');
+    if (!video) return;
+    if (e.isIntersecting) {
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+      video.currentTime = 0;
+    }
+  });
+}, { threshold: 0.4 });
+
+document.querySelectorAll('.hover-play-card').forEach(card => {
+  videoPlayObserver.observe(card);
+});
+
+/* ==========================
+   HOVER-TO-PLAY VIDEOS (fallback / gallery cards)
+========================== */
+function bindHoverPlay(container) {
+  // Gallery grid card hover previews
+  container.querySelectorAll('.gallery-card').forEach(card => {
+    const video = card.querySelector('video');
+    if (!video) return;
+    card.addEventListener('mouseenter', () => video.play().catch(() => {}));
+    card.addEventListener('mouseleave', () => { video.pause(); video.currentTime = 0; });
+  });
+}
+
+bindHoverPlay(document);
+
+/* ==========================
+   YOUTUBE BUTTONS
+========================== */
+function renderYouTubeButtons(section) {
+  section.querySelectorAll('.gallery-card[data-yt]').forEach(card => {
+    const url = card.dataset.yt;
+    if (!url) return;
+    const info = card.querySelector('.gallery-card-info');
+    if (!info || info.querySelector('.gallery-card-yt-link')) return;
+    const a = document.createElement('a');
+    a.className = 'gallery-card-yt-link';
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.addEventListener('click', e => e.stopPropagation());
+    a.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-2.75 12.07 12.07 0 0 0-7.64 2.75 12.07 12.07 0 0 0-3.77 8.66 12.07 12.07 0 0 0 3.77 8.66 12.07 12.07 0 0 0 7.64 2.75 4.83 4.83 0 0 1 3.77-2.75A4.83 4.83 0 0 1 21 12a4.83 4.83 0 0 1-1.41-5.31zM10 15.5V8.5l6 3.5z"/></svg> Watch on YouTube`;
+    info.appendChild(a);
+  });
+}
+
+/* ==========================
+   COVER HERO SLOT HIDING
+========================== */
+function updateCoverSlots(section) {
+  const heroImg = section.querySelector('.gallery-cover-hero img');
+  const heroVid = section.querySelector('.gallery-cover-hero video');
+
+  if (heroImg) {
+    const slot = section.querySelector('.gallery-cover-hero-slot');
+    if (heroImg.src && heroImg.src !== window.location.href) {
+      heroImg.style.display = 'block';
+      if (slot) slot.style.display = 'none';
+    }
+    heroImg.addEventListener('load', () => { if (slot) slot.style.display = 'none'; });
+    heroImg.addEventListener('error', () => { heroImg.style.display = 'none'; });
+  }
+
+  if (heroVid) {
+    const slot = section.querySelector('.gallery-cover-hero-slot');
+    if (heroVid.querySelector('source')) {
+      heroVid.style.display = 'block';
+      if (slot) slot.style.display = 'none';
+      heroVid.play().catch(() => {});
+    }
+  }
+}
+
+/* ==========================
+   GALLERY PAGE
+========================== */
+const galleryTitles = {
+  photo: "Photography",
+  video: "Videography",
+  design: "Graphic Design",
+  web: "Web Development",
+  "3d": "3D Animation"
+};
+
+function openGallery(type) {
+  const page = document.getElementById("gallery-page");
+  page.style.display = "block";
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => page.classList.add("open"));
+  });
+  document.body.style.overflow = "hidden";
+
+  document.querySelectorAll(".gallery-section").forEach(g => g.style.display = "none");
+
+  const active = document.getElementById(`gallery-${type}`);
+  active.style.display = "block";
+
+  document.getElementById("gallery-label").textContent = galleryTitles[type];
+  document.getElementById("gallery-heading").textContent = galleryTitles[type];
+  document.getElementById("gallery-count").textContent =
+    active.querySelectorAll(".gallery-card").length + " Works";
+
+  document.querySelector('.gallery-body').scrollTop = 0;
+
+  renderYouTubeButtons(active);
+  updateCoverSlots(active);
+  bindHoverPlay(active);
+}
+
+function closeGallery() {
+  const page = document.getElementById("gallery-page");
+  page.classList.remove("open");
+  setTimeout(() => { page.style.display = "none"; }, 350);
+  document.body.style.overflow = "";
+}
+
+/* ==========================
+   LIGHTBOX
+========================== */
+let galleryItems = [];
+let currentIndex = 0;
+
+function openLightbox(card) {
+  const grid = card.closest('.gallery-grid');
+  galleryItems = [...grid.querySelectorAll('.gallery-card')];
+  currentIndex = galleryItems.indexOf(card);
+  updateLightbox();
+  document.getElementById('lightbox').classList.add('open');
+}
+
+function updateLightbox() {
+  const card = galleryItems[currentIndex];
+  const type = card.dataset.type;
+  const src = card.dataset.src;
+  const caption = card.dataset.caption || '';
+
+  const img = document.getElementById('lightbox-img');
+  const vid = document.getElementById('lightbox-vid');
+  img.style.display = 'none';
+  vid.style.display = 'none';
+
+  if (type === 'image') {
+    img.src = src;
+    img.style.display = 'block';
+  } else {
+    vid.src = src;
+    vid.style.display = 'block';
+  }
+
+  document.getElementById('lightbox-caption').textContent = caption;
+}
+
+function lightboxStep(direction) {
+  currentIndex += direction;
+  if (currentIndex < 0) currentIndex = galleryItems.length - 1;
+  if (currentIndex >= galleryItems.length) currentIndex = 0;
+  updateLightbox();
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  const vid = document.getElementById('lightbox-vid');
+  vid.pause();
+  vid.src = '';
+}
+
+/* ==========================
+   KEYBOARD SUPPORT
+========================== */
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'ArrowRight') lightboxStep(1);
+  if (e.key === 'ArrowLeft') lightboxStep(-1);
+  if (e.key === 'Escape') closeLightbox();
+});
+
+/* ==========================
+   REVEAL ON SCROLL
+========================== */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+  });
+}, { threshold: .1, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
