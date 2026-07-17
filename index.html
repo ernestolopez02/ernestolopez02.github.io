@@ -830,7 +830,7 @@
     <div class="portfolio-item" data-cat="photo" data-gallery="photo" onclick="openGallery('photo')">
       <div class="portfolio-media">
         <!-- COVER IMAGE — replace src with your file, e.g. src="images/photo-cover.jpg" -->
-        <img src="pictures/pic1.jpeg" alt="Photography Cover"
+        <img src="pictures/murphy.jpg" alt="Photography Cover"
           onerror="this.style.display='none'"
           onload="this.parentElement.classList.remove('empty-slot')">
         <div class="slot-label">📷 PHOTOGRAPHY<br><span>Set cover: replace src="" above</span></div>
@@ -928,7 +928,7 @@
 
       <!-- COVER HERO — replace src="" with your best photo e.g. src="images/photo-cover.jpg" -->
       <div class="gallery-cover-hero">
-        <img src="pictures/pic1.jpeg" alt="Photography Cover" onerror="this.style.display='none'">
+        <img src="pictures/murphy.jpg" alt="Photography Cover" onerror="this.style.display='none'">
         <div class="gallery-cover-hero-slot" id="photo-cover-slot">
         </div>
         <div class="gallery-cover-overlay">
@@ -939,7 +939,13 @@
       </div>
 
       <div class="gallery-grid">
-
+		  
+		<div class="gallery-card" data-type="image" data-src="pictures/murphy.jpg" data-caption="4" onclick="openLightbox(this)">
+          <div class="gallery-card-media">
+            <img src="pictures/murphy.jpg" alt="Photo 4" onerror="this.style.display='none'">
+          </div>
+        </div>
+		  
 		<div class="gallery-card" data-type="image" data-src="pictures/pic1.jpeg" data-caption="12" onclick="openLightbox(this)">
           <div class="gallery-card-media">
             <img src="pictures/pic1.jpeg" alt="Photo 12" onerror="this.style.display='none'">
@@ -1356,7 +1362,19 @@
             <div class="gallery-card-desc">Website intro animation for a hook.</div>
           </div>
         </div>
-		
+
+		<div class="gallery-card" data-type="video" data-src="videos/dwn1.mp4" data-caption="intro" data-yt="" onclick="openLightbox(this)">
+        <div class="gallery-card-media">
+        <video muted loop playsinline>
+            <source src="videos/dwn1.mp4" type="video/mp4">
+        </video>
+        </div>
+		<div class="gallery-card-info">
+            <div class="gallery-card-title">Context</div>
+            <div class="gallery-card-desc">Website intro animation for a hook.</div>
+          </div>
+        </div>
+			  
         <div class="gallery-card" data-type="video" data-src="videos/discwork.mp4" data-caption="intro" data-yt="" onclick="openLightbox(this)">
           <div class="gallery-card-media">
             <video muted loop playsinline>
